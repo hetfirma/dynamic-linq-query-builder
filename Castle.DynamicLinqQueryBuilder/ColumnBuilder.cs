@@ -21,7 +21,7 @@ namespace Castle.DynamicLinqQueryBuilder
         {
             List<ColumnDefinition> itemBankColumnDefinitions = new List<ColumnDefinition>();
 
-            var id = 1;
+          //  var id = 1;
             foreach (var prop in dataType.GetProperties())
             {
                 if (prop.GetCustomAttribute(typeof (IgnoreDataMemberAttribute)) != null) continue;
@@ -29,7 +29,7 @@ namespace Castle.DynamicLinqQueryBuilder
                 var name = camelCase ? prop.Name.ToCamelCase() : prop.Name;
 
                 var title = prop.Name.ToFriendlySpacedString();
-
+                var id = prop.Name.ConvertToJsId();
                 var type = string.Empty;
 
                 if ((prop.PropertyType == typeof (double)) || (prop.PropertyType == typeof (double?)))
@@ -102,7 +102,7 @@ namespace Castle.DynamicLinqQueryBuilder
                         break;
                 }
 
-                id++;
+               // id++;
             }
             return itemBankColumnDefinitions;
         }
@@ -142,6 +142,23 @@ namespace Castle.DynamicLinqQueryBuilder
             var res = r.Replace(input, " ");
 
             return res;
+        }
+
+        public static string ConvertToJsId(this string input)
+        {
+            // Convert to lowercase
+            string lowerCase = input.ToLower();
+
+            // Remove invalid characters (keep only letters, numbers, hyphens, and underscores)
+            string clean = Regex.Replace(lowerCase, @"[^a-z0-9\-_]", "-");
+
+            // Replace spaces with hyphens
+            clean = Regex.Replace(clean, @"\s+", "-");
+
+            // Remove any leading or trailing hyphens/underscores
+            clean = clean.Trim('-');
+
+            return clean;
         }
     }
 }

@@ -3,7 +3,7 @@
 }
 @section scripts
 {
-    <script type="text/javascript">
+    <script>
     $(function() {
         // Handler for .ready() called.
 
@@ -107,6 +107,56 @@
 
         filterData();
 
+
+
+            $('.parse-json').on('click', function () {
+                $('#result').removeClass('d-none')
+                    .find('pre').html(JSON.stringify(
+                        $('#jquery-query-builder').queryBuilder('getRules', {
+                            get_flags: true,
+                            skip_empty: true
+                        }),
+                        undefined, 2
+                    ));
+            });
+
+
+            $('.get-rules').on('click', function () {
+                const queryBuilderConfig = getQueryBuilderConfig();
+                setQueryBuilderRules(queryBuilderConfig);
+            });
+
+
+            // production get rules from api endpoint
+            function getQueryBuilderConfig() {
+                return {
+                    condition: 'AND',
+                    flags: {
+                        condition_readonly: false
+                    },
+                    data: {
+                        root: true
+                    },
+                    rules: [
+                        {
+                            id: 'firstname',
+                            operator: 'equal',
+                            value: 'Emlynne'
+                        },
+                        {
+                            id: 'city',
+                            field: 'City',
+                            operator: 'equal',
+                            value: 'Spokane'
+                        }
+                    ]
+                };
+            }
+
+            function setQueryBuilderRules(config) {
+                $('#jquery-query-builder').queryBuilder('setRules', config);
+            }
+
     });
 
 
@@ -119,12 +169,26 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-12 p-4">
         <h2>Build Filters</h2>
         <div id="jquery-query-builder"></div>
-        <button id="applyFilter">Apply Filter</button>
+        <button class="btn btn-warning set-filters" id="applyFilter">Apply Filter</button>
     </div>
-    <div class="col-md-8">
+
+    <div class="btn-group">
+        <button class="btn btn-default" disabled>Set:</button>
+        <button class="btn btn-success get-rules">From JSON</button>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" disabled>Get:</button>
+        <button class="btn btn-primary parse-json">JSON</button>
+    </div>
+
+    <hr />
+</div>
+
+<div class="row mt-2">
+    <div class="col-6">
         <h2>User Data</h2>
         <table id="data-table">
             <thead>
@@ -143,4 +207,10 @@
         </table>
     </div>
 
+    <div class="col-6">
+        <div id="result" class="hide bg-white">
+            <h3>Output</h3>
+            <pre></pre>
+        </div>
+    </div>
 </div>
