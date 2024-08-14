@@ -213,3 +213,5 @@ ModelManifest.xml
 Castle.DynamicLinqQueryBuilder.Nuget/lib/Castle.DynamicLinqQueryBuilder.xml
 # AxoCover
 .axoCover/
+/Castle.DynamicLinqQueryBuilder.Example/wwwroot/lib/bootstrap-icons
+/Castle.DynamicLinqQueryBuilder.Example/wwwroot/scss
