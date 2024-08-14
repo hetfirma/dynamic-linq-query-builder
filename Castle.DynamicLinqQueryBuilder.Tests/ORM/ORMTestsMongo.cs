@@ -9,6 +9,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
     [ExcludeFromCodeCoverage]
@@ -97,8 +98,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
             };
             var expression = filter.BuildExpressionLambda<Restaurant>(new BuildExpressionOptions(), out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id2");
+            ClassicAssert.AreEqual(result.Count, 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id2");
         }
         #if LOCALTEST
         [Test]
@@ -117,8 +118,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
             };
             var expression = filter.BuildExpressionLambda<Restaurant>(new BuildExpressionOptions(), out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id");
+            ClassicAssert.AreEqual(result.Count, 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id");
 
             filter = new JsonNetFilterRule() {
                 Condition = "and",
@@ -136,7 +137,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                 filter.BuildExpressionLambda<Restaurant>(
                     new BuildExpressionOptions { StringCaseSensitiveComparison = true }, out var _);
             result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 0);
+            ClassicAssert.IsTrue(result.Count == 0);
         }
 
 
@@ -157,8 +158,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
             };
             var expression = filter.BuildExpressionLambda<Restaurant>(new BuildExpressionOptions(), out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id2");
+            ClassicAssert.IsTrue(result.Count == 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id2");
         }
 
 
@@ -181,8 +182,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                 filter.BuildExpressionLambda<Restaurant>(
                     new BuildExpressionOptions { CultureInfo = CultureInfo.CurrentCulture }, out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id2");
+            ClassicAssert.IsTrue(result.Count == 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id2");
         }
 
         #if LOCALTEST
@@ -204,8 +205,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                 filter.BuildExpressionLambda<Restaurant>(
                     new BuildExpressionOptions { CultureInfo = CultureInfo.CurrentCulture }, out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id");
+            ClassicAssert.IsTrue(result.Count == 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id");
         }
 
 
@@ -227,8 +228,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                 filter.BuildExpressionLambda<Restaurant>(
                     new BuildExpressionOptions { CultureInfo = CultureInfo.CurrentCulture }, out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
-            Assert.AreEqual(result.First().RestaurantId, "Id3");
+            ClassicAssert.IsTrue(result.Count == 1);
+            ClassicAssert.AreEqual(result.First().RestaurantId, "Id3");
         }
 
 
@@ -256,13 +257,13 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
             var a = Builders<Restaurant>.Filter.Where(expression);
             var b = a.Render(_collection.DocumentSerializer, _collection.Settings.SerializerRegistry).ToString();
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 3);
+            ClassicAssert.IsTrue(result.Count == 3);
             
             // Verify that the expression is using ToString() on the value
             var filterDefinition = Builders<Restaurant>.Filter.Where(expression);
             var mongoQuery = filterDefinition
                 .Render(_collection.DocumentSerializer, _collection.Settings.SerializerRegistry).ToString();
-            Assert.IsTrue(mongoQuery == @"{ ""$nor"" : [{ ""$and"" : [{ ""Details.address"" : { ""$ne"" : null } }, { ""$expr"" : { ""$eq"" : [{ ""$toString"" : ""$Details.address"" }, ""a""] } }] }] }");
+            ClassicAssert.IsTrue(mongoQuery == @"{ ""$nor"" : [{ ""$and"" : [{ ""Details.address"" : { ""$ne"" : null } }, { ""$expr"" : { ""$eq"" : [{ ""$toString"" : ""$Details.address"" }, ""a""] } }] }] }");
         }
 
         #if LOCALTEST
@@ -291,13 +292,13 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                     }, out var _);
 
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 3);
+            ClassicAssert.IsTrue(result.Count == 3);
 
             // Verify that the expression is not using ToString() on the value
             var filterDefinition = Builders<Restaurant>.Filter.Where(expression);
             var mongoQuery = filterDefinition
                 .Render(_collection.DocumentSerializer, _collection.Settings.SerializerRegistry).ToString();
-            Assert.IsTrue(mongoQuery == @"{ ""$nor"" : [{ ""$and"" : [{ ""Details.address"" : { ""$ne"" : null } }, { ""Details.address"" : ""a"" }] }] }");
+            ClassicAssert.IsTrue(mongoQuery == @"{ ""$nor"" : [{ ""$and"" : [{ ""Details.address"" : { ""$ne"" : null } }, { ""Details.address"" : ""a"" }] }] }");
         }
 
         #if LOCALTEST
@@ -321,7 +322,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM {
                 filter.BuildExpressionLambda<Restaurant>(
                     new BuildExpressionOptions { CultureInfo = CultureInfo.CurrentCulture }, out var _);
             var result = await _collection.Find(expression).ToListAsync();
-            Assert.IsTrue(result.Count == 1);
+            ClassicAssert.IsTrue(result.Count == 1);
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Castle.DynamicLinqQueryBuilder.Tests.ORM
 {
@@ -144,8 +145,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM
             };
 
             var tractorIdFilteredList = context.Products.BuildQuery(tractorFilter).ToList();
-            Assert.IsTrue(tractorIdFilteredList != null);
-            Assert.IsTrue(tractorIdFilteredList.Count == 3);
+            ClassicAssert.IsTrue(tractorIdFilteredList != null);
+            ClassicAssert.IsTrue(tractorIdFilteredList.Count == 3);
         }
 
 #if LOCALTEST
@@ -185,8 +186,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM
             {
                 NullCheckNestedCLRObjects = false
             }).ToList();
-            Assert.IsTrue(tractorIdFilteredList != null);
-            Assert.IsTrue(tractorIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(tractorIdFilteredList != null);
+            ClassicAssert.IsTrue(tractorIdFilteredList.Count == 2);
         }
         [ExcludeFromCodeCoverage]
         public class StoreDto
@@ -227,8 +228,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM
             };
 
             var beginsFilteredList = context.Products.BuildQuery(modelFilter).ToList();
-            Assert.IsTrue(beginsFilteredList != null);
-            Assert.IsTrue(beginsFilteredList.Count == 2);
+            ClassicAssert.IsTrue(beginsFilteredList != null);
+            ClassicAssert.IsTrue(beginsFilteredList.Count == 2);
         }
 
 #if LOCALTEST
@@ -258,8 +259,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.ORM
             };
 
             var storeFilteredList = context.Stores.BuildQuery(storeFilter).ToList();
-            Assert.IsTrue(storeFilteredList != null);
-            Assert.IsTrue(storeFilteredList.Count == 1);
+            ClassicAssert.IsTrue(storeFilteredList != null);
+            ClassicAssert.IsTrue(storeFilteredList.Count == 1);
         }
 
 

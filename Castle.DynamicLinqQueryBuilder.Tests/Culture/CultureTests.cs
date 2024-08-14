@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicLinqQueryBuilder.Tests.Rules;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Castle.DynamicLinqQueryBuilder.Tests.Culture
 {
@@ -51,8 +52,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Culture
             {
                 CultureInfo = new CultureInfo("es-ES")
             }).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 3);
+            Assert.That(statValueFilterList, Is.Not.Null);
+            Assert.That(statValueFilterList.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -80,8 +81,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Culture
             {
                 CultureInfo = new CultureInfo("es-ES")
             }).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Castle.DynamicLinqQueryBuilder.Tests.Helpers;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Castle.DynamicLinqQueryBuilder.Tests.CustomOperators
 {
@@ -58,7 +59,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.CustomOperators
             options.Operators = new List<IFilterOperator>() { new InIpRangeOperator()};
             var result = records.AsQueryable().BuildQuery<MyRecord>(myFilter, options).ToList();
             var len = result.Count;
-            Assert.AreEqual(1, len);
+            ClassicAssert.AreEqual(1, len);
         }
 
         [Test]

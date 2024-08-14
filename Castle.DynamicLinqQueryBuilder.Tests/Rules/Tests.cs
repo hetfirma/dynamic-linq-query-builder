@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Castle.DynamicLinqQueryBuilder.Tests.Helpers;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
 {
@@ -257,8 +258,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var queryable = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter);
             var contentIdFilteredList = queryable.ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 1);
 
             contentIdFilter = new FilterRule()
             {
@@ -329,8 +330,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             queryable = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter);
             var contentIdFilteredList2 = queryable.ToList();
-            Assert.IsTrue(contentIdFilteredList2 != null);
-            Assert.IsTrue(contentIdFilteredList2.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList2 != null);
+            ClassicAssert.IsTrue(contentIdFilteredList2.Count == 1);
 
             contentIdFilter = new FilterRule()
             {
@@ -386,8 +387,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             {
                 NullCheckNestedCLRObjects = true
             }).ToList();
-            Assert.IsTrue(contentNullFilteredList != null);
-            Assert.IsTrue(contentNullFilteredList.Count == 0);
+            ClassicAssert.IsTrue(contentNullFilteredList != null);
+            ClassicAssert.IsTrue(contentNullFilteredList.Count == 0);
         }
 
         [Test]
@@ -418,8 +419,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             {
                 NullCheckNestedCLRObjects = true
             }).ToList();
-            Assert.IsTrue(contentNullFilteredList != null);
-            Assert.IsTrue(contentNullFilteredList.Count == 0);
+            ClassicAssert.IsTrue(contentNullFilteredList != null);
+            ClassicAssert.IsTrue(contentNullFilteredList.Count == 0);
         }
 
         [Test]
@@ -448,8 +449,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentGuidFilter).ToList();
-            Assert.IsTrue(contentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count == 1);
 
             //expect no entry to match for a Guid Comparison against a null nullable Id
             var nullableContentGuidFilter = new QueryBuilderFilterRule
@@ -470,8 +471,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentGuidFilter).ToList();
-            Assert.IsTrue(nullableContentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count == 1);
 
             //expect two entries to match for an integer comparison
             var contentIdFilter = new FilterRule()
@@ -492,9 +493,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 3);
-            Assert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 1, 2 }).Contains(p.ContentTypeId)));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 3);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 1, 2 }).Contains(p.ContentTypeId)));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -523,9 +524,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 2);
-            Assert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 1 }).Contains(p.ContentTypeId)));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 1 }).Contains(p.ContentTypeId)));
 
             //expect two entries to match for an integer comparison
             var nullableContentIdFilter = new FilterRule()
@@ -547,9 +548,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableContentIdFilteredList.All(p => (new List<int>() { 1, 2 }).Contains(p.NullableContentTypeId.Value)));
 
             //expect 3 entries to match for a case-insensitive string comparison
@@ -571,9 +572,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p == "there is something interesting about this text"));
 
@@ -596,9 +597,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterListCaps = startingQuery.BuildQuery(longerTextToFilterFilterCaps).ToList();
-            Assert.IsTrue(longerTextToFilterListCaps != null);
-            Assert.IsTrue(longerTextToFilterListCaps.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterListCaps != null);
+            ClassicAssert.IsTrue(longerTextToFilterListCaps.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterListCaps.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p == "there is something interesting about this text"));
 
@@ -622,9 +623,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -655,9 +656,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -681,9 +682,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (new List<double>() { 1.11, 1.12 }).Contains(p)));
 
@@ -714,9 +715,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p == 1.112));
 
@@ -739,9 +740,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var dateListFilterList = startingQuery.ToList().BuildQuery(dateListFilter).ToList();
-            Assert.IsTrue(dateListFilterList != null);
-            Assert.IsTrue(dateListFilterList.Count == 3);
-            Assert.IsTrue(dateListFilterList.All(p => p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
+            ClassicAssert.IsTrue(dateListFilterList != null);
+            ClassicAssert.IsTrue(dateListFilterList.Count == 3);
+            ClassicAssert.IsTrue(dateListFilterList.All(p => p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
 
             //expect failure when an invalid date is encountered in double comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -770,9 +771,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var strListFilterList = startingQuery.AsEnumerable().BuildQuery(strListFilter).ToList();
-            Assert.IsTrue(strListFilterList != null);
-            Assert.IsTrue(strListFilterList.Count == 3);
-            Assert.IsTrue(strListFilterList.All(p => p.StrList.Contains("Str2")));
+            ClassicAssert.IsTrue(strListFilterList != null);
+            ClassicAssert.IsTrue(strListFilterList.Count == 3);
+            ClassicAssert.IsTrue(strListFilterList.All(p => p.StrList.Contains("Str2")));
             
             //expect 2 entries to match for a List<int> field
             var intListFilter = new FilterRule()
@@ -793,9 +794,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var intListFilterList = startingQuery.BuildQuery(intListFilter).ToList();
-            Assert.IsTrue(intListFilterList != null);
-            Assert.IsTrue(intListFilterList.Count == 3);
-            Assert.IsTrue(intListFilterList.All(p => p.IntList.Contains(1) || p.IntList.Contains(3)));
+            ClassicAssert.IsTrue(intListFilterList != null);
+            ClassicAssert.IsTrue(intListFilterList.Count == 3);
+            ClassicAssert.IsTrue(intListFilterList.All(p => p.IntList.Contains(1) || p.IntList.Contains(3)));
 
             //expect failure when an invalid double is encountered in double comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -824,9 +825,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableIntListList = startingQuery.BuildQuery(nullableIntListFilter).ToList();
-            Assert.IsTrue(nullableIntListList != null);
-            Assert.IsTrue(nullableIntListList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableIntListList != null);
+            ClassicAssert.IsTrue(nullableIntListList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableIntListList.All(p => p.NullableIntList.Contains(5)));
 
 
@@ -849,9 +850,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var multipleWithBlankList = startingQuery.BuildQuery(multipleWithBlankRule).ToList();
-            Assert.IsTrue(multipleWithBlankList != null);
-            Assert.IsTrue(multipleWithBlankList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(multipleWithBlankList != null);
+            ClassicAssert.IsTrue(multipleWithBlankList.Count == 4);
+            ClassicAssert.IsTrue(
                 multipleWithBlankList.All(p => p.StrList.Contains("") || p.StrList.Contains("Str2")));
         }
 
@@ -880,7 +881,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentGuidFilter).ToList();
-            Assert.IsNotNull(contentGuidFilteredList);
+            ClassicAssert.IsNotNull(contentGuidFilteredList);
             CollectionAssert.IsNotEmpty(contentGuidFilteredList);
             CollectionAssert.DoesNotContain(contentGuidFilteredList.Select(x => x.ContentTypeGuid), firstGuid);
 
@@ -903,9 +904,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 1);
-            Assert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 3 }).Contains(p.ContentTypeId)));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => (new List<int>() { 3 }).Contains(p.ContentTypeId)));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -935,9 +936,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableContentIdFilteredList.All(p => !(new List<int>() { 1, 2 }).Contains(p.NullableContentTypeId.GetValueOrDefault())));
 
 
@@ -962,9 +963,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null || p != "there is something interesting about this text"));
 
@@ -988,9 +989,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -1021,9 +1022,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => p != DateTime.UtcNow.Date));
 
@@ -1047,9 +1048,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => !(new List<double>() { 1.11, 1.12 }).Contains(p)));
 
@@ -1080,9 +1081,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p != 1.112));
 
@@ -1105,9 +1106,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var dateListFilterList = startingQuery.BuildQuery(dateListFilter).ToList();
-            Assert.IsTrue(dateListFilterList != null);
-            Assert.IsTrue(dateListFilterList.Count == 1);
-            Assert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
+            ClassicAssert.IsTrue(dateListFilterList != null);
+            ClassicAssert.IsTrue(dateListFilterList.Count == 1);
+            ClassicAssert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
 
             //expect failure when an invalid date is encountered in double comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -1136,9 +1137,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var strListFilterList = startingQuery.BuildQuery(strListFilter).ToList();
-            Assert.IsTrue(strListFilterList != null);
-            Assert.IsTrue(strListFilterList.Count == 1);
-            Assert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
+            ClassicAssert.IsTrue(strListFilterList != null);
+            ClassicAssert.IsTrue(strListFilterList.Count == 1);
+            ClassicAssert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
             
             //expect 2 entries to match for a List<int> field
             var intListFilter = new FilterRule()
@@ -1159,9 +1160,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var intListFilterList = startingQuery.BuildQuery(intListFilter).ToList();
-            Assert.IsTrue(intListFilterList != null);
-            Assert.IsTrue(intListFilterList.Count == 1);
-            Assert.IsTrue(intListFilterList.All(p => !p.IntList.Contains(1) && !p.IntList.Contains(3)));
+            ClassicAssert.IsTrue(intListFilterList != null);
+            ClassicAssert.IsTrue(intListFilterList.Count == 1);
+            ClassicAssert.IsTrue(intListFilterList.All(p => !p.IntList.Contains(1) && !p.IntList.Contains(3)));
 
             //expect failure when an invalid double is encountered in double comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -1190,9 +1191,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableIntListList = startingQuery.BuildQuery(nullableIntListFilter).ToList();
-            Assert.IsTrue(nullableIntListList != null);
-            Assert.IsTrue(nullableIntListList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableIntListList != null);
+            ClassicAssert.IsTrue(nullableIntListList.Count == 1);
+            ClassicAssert.IsTrue(
                 nullableIntListList.All(p => !p.NullableIntList.Contains(5)));
         }
 
@@ -1219,9 +1220,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsNotNull(contentGuidFilteredList);
+            ClassicAssert.IsNotNull(contentGuidFilteredList);
             CollectionAssert.IsEmpty(contentGuidFilteredList);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(
                 contentGuidFilteredList.Select(p => p.ContentTypeGuid)
                     .All(p => p == null));
 
@@ -1243,10 +1244,10 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery(nullableContentGuidFilter).ToList();
-            Assert.IsNotNull(nullableContentGuidFilteredList);
+            ClassicAssert.IsNotNull(nullableContentGuidFilteredList);
             CollectionAssert.IsNotEmpty(nullableContentGuidFilteredList);
-            Assert.AreEqual(2, nullableContentGuidFilteredList.Count);
-            Assert.IsTrue(
+            ClassicAssert.AreEqual(2, nullableContentGuidFilteredList.Count);
+            ClassicAssert.IsTrue(
                 nullableContentGuidFilteredList.Select(p => p.NullableContentTypeGuid)
                     .All(p => p == null));
 
@@ -1270,9 +1271,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null));
 
@@ -1296,9 +1297,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentTypeIdFilterList = startingQuery.BuildQuery(contentTypeIdFilter).ToList();
-            Assert.IsTrue(contentTypeIdFilterList != null);
-            Assert.IsTrue(contentTypeIdFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(contentTypeIdFilterList != null);
+            ClassicAssert.IsTrue(contentTypeIdFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 contentTypeIdFilterList.Select(p => p.ContentTypeId)
                     .All(p => p == 0));
 
@@ -1327,8 +1328,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilterList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsNotNull(contentGuidFilterList);
-            Assert.AreEqual(4, contentGuidFilterList.Count);
+            ClassicAssert.IsNotNull(contentGuidFilterList);
+            ClassicAssert.AreEqual(4, contentGuidFilterList.Count);
             CollectionAssert.AllItemsAreNotNull(contentGuidFilterList.Select(x => x.ContentTypeGuid));
 
 
@@ -1350,8 +1351,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery(nullableContentGuidFilter).ToList();
-            Assert.IsNotNull(nullableContentGuidFilteredList);
-            Assert.AreEqual(2, nullableContentGuidFilteredList.Count);
+            ClassicAssert.IsNotNull(nullableContentGuidFilteredList);
+            ClassicAssert.AreEqual(2, nullableContentGuidFilteredList.Count);
             CollectionAssert.AllItemsAreNotNull(nullableContentGuidFilteredList.Select(x => x.NullableContentTypeGuid));
 
 
@@ -1374,9 +1375,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p != null));
 
@@ -1400,9 +1401,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentTypeIdFilterList = startingQuery.BuildQuery(contentTypeIdFilter).ToList();
-            Assert.IsTrue(contentTypeIdFilterList != null);
-            Assert.IsTrue(contentTypeIdFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(contentTypeIdFilterList != null);
+            ClassicAssert.IsTrue(contentTypeIdFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 contentTypeIdFilterList.Select(p => p.ContentTypeId)
                     .All(p => p != 0));
 
@@ -1431,10 +1432,10 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilterList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsNotNull(contentGuidFilterList);
+            ClassicAssert.IsNotNull(contentGuidFilterList);
             CollectionAssert.IsNotEmpty(contentGuidFilterList);
-            Assert.AreEqual(1, contentGuidFilterList.Count);
-            Assert.IsTrue(
+            ClassicAssert.AreEqual(1, contentGuidFilterList.Count);
+            ClassicAssert.IsTrue(
                 contentGuidFilterList.Select(p => p.NullableContentTypeGuid)
                     .All(p => p == Guid.Empty));
 
@@ -1457,10 +1458,10 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullContentGuidFilterList = startingQuery.BuildQuery(nullContentGuidFilter).ToList();
-            Assert.IsNotNull(nullContentGuidFilterList);
+            ClassicAssert.IsNotNull(nullContentGuidFilterList);
             CollectionAssert.IsNotEmpty(nullContentGuidFilterList);
-            Assert.AreEqual(1, nullContentGuidFilterList.Count);
-            Assert.IsTrue(
+            ClassicAssert.AreEqual(1, nullContentGuidFilterList.Count);
+            ClassicAssert.IsTrue(
                 nullContentGuidFilterList.Select(p => p.NullableContentTypeGuid)
                     .All(p => p == Guid.Empty));
 
@@ -1484,8 +1485,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 0);
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 0);
 
 
             //expect 2 entries to match for a List<DateTime> field
@@ -1506,9 +1507,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var dateListFilterList = startingQuery.BuildQuery(dateListFilter).ToList();
-            Assert.IsTrue(dateListFilterList != null);
-            Assert.IsTrue(dateListFilterList.Count == 0);
-            //Assert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
+            ClassicAssert.IsTrue(dateListFilterList != null);
+            ClassicAssert.IsTrue(dateListFilterList.Count == 0);
+            //ClassicAssert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
 
 
             //expect 2 entries to match for a List<string> field
@@ -1530,9 +1531,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var strListFilterList = startingQuery.BuildQuery(strListFilter).ToList();
-            Assert.IsTrue(strListFilterList != null);
-            Assert.IsTrue(strListFilterList.Count == 0);
-            //Assert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
+            ClassicAssert.IsTrue(strListFilterList != null);
+            ClassicAssert.IsTrue(strListFilterList.Count == 0);
+            //ClassicAssert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
 
 
             //expect 2 entries to match for a List<int> field
@@ -1554,8 +1555,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var intListFilterList = startingQuery.BuildQuery(intListFilter).ToList();
-            Assert.IsTrue(intListFilterList != null);
-            Assert.IsTrue(intListFilterList.Count == 0);
+            ClassicAssert.IsTrue(intListFilterList != null);
+            ClassicAssert.IsTrue(intListFilterList.Count == 0);
         }
 
         [Test]
@@ -1581,10 +1582,10 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilterList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsNotNull(contentGuidFilterList);
+            ClassicAssert.IsNotNull(contentGuidFilterList);
             CollectionAssert.IsNotEmpty(contentGuidFilterList);
-            Assert.AreEqual(3, contentGuidFilterList.Count);
-            Assert.IsTrue(
+            ClassicAssert.AreEqual(3, contentGuidFilterList.Count);
+            ClassicAssert.IsTrue(
                             contentGuidFilterList.Select(p => p.ContentTypeGuid)
                                 .All(p => p != Guid.Empty));
 
@@ -1606,11 +1607,11 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullContentGuidFilterList = startingQuery.BuildQuery(nullContentGuidFilter).ToList();
-            Assert.IsNotNull(nullContentGuidFilterList);
+            ClassicAssert.IsNotNull(nullContentGuidFilterList);
             CollectionAssert.IsNotEmpty(nullContentGuidFilterList);
-            Assert.AreEqual(1, nullContentGuidFilterList.Count);
+            ClassicAssert.AreEqual(1, nullContentGuidFilterList.Count);
             CollectionAssert.AllItemsAreNotNull(nullContentGuidFilterList.Select(z => z.NullableContentTypeGuid));
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(
                 nullContentGuidFilterList.Select(p => p.NullableContentTypeGuid)
                     .All(p => p != null && p != Guid.Empty));
 
@@ -1634,9 +1635,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null || p.Length > 0));
 
@@ -1660,9 +1661,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var dateListFilterList = startingQuery.BuildQuery(dateListFilter).ToList();
-            Assert.IsTrue(dateListFilterList != null);
-            Assert.IsTrue(dateListFilterList.Count == 4);
-            //Assert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
+            ClassicAssert.IsTrue(dateListFilterList != null);
+            ClassicAssert.IsTrue(dateListFilterList.Count == 4);
+            //ClassicAssert.IsTrue(dateListFilterList.All(p => !p.DateList.Contains(DateTime.UtcNow.Date.AddDays(-2))));
 
 
 
@@ -1685,9 +1686,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var strListFilterList = startingQuery.BuildQuery(strListFilter).ToList();
-            Assert.IsTrue(strListFilterList != null);
-            Assert.IsTrue(strListFilterList.Count == 4);
-            //Assert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
+            ClassicAssert.IsTrue(strListFilterList != null);
+            ClassicAssert.IsTrue(strListFilterList.Count == 4);
+            //ClassicAssert.IsTrue(strListFilterList.All(p => !p.StrList.Contains("Str2")));
 
 
             //expect 2 entries to match for a List<int> field
@@ -1709,8 +1710,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var intListFilterList = startingQuery.BuildQuery(intListFilter).ToList();
-            Assert.IsTrue(intListFilterList != null);
-            Assert.IsTrue(intListFilterList.Count == 4);
+            ClassicAssert.IsTrue(intListFilterList != null);
+            ClassicAssert.IsTrue(intListFilterList.Count == 4);
 
         }
 
@@ -1738,8 +1739,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsTrue(contentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count >= 1);
+            ClassicAssert.IsTrue(contentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count >= 1);
 
 
             //expect no entry to match for a Guid Comparison against a null nullable Id
@@ -1761,8 +1762,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery(nullableContentGuidFilter).ToList();
-            Assert.IsTrue(nullableContentGuidFilteredList != null);
-            Assert.IsTrue(nullableContentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList.Count == 1);
 
             //expect 3 entries to match for a case-insensitive string comparison
             var longerTextToFilterFilter = new FilterRule()
@@ -1783,9 +1784,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p.Contains("something interesting")));
 
@@ -1815,9 +1816,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null));
 
@@ -1847,9 +1848,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null));
 
@@ -1880,8 +1881,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsTrue(contentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count >= 1);
+            ClassicAssert.IsTrue(contentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count >= 1);
 
             //expect no entry to match for a Guid Comparison against a null nullable Id
             var nullableContentGuidFilter = new QueryBuilderFilterRule
@@ -1902,8 +1903,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery(nullableContentGuidFilter).ToList();
-            Assert.IsTrue(nullableContentGuidFilteredList != null);
-            Assert.IsTrue(nullableContentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList.Count == 1);
 
             //expect 3 entries to match for a case-insensitive string comparison
             var longerTextToFilterFilter = new FilterRule()
@@ -1924,9 +1925,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p.EndsWith("about this text")));
 
@@ -1956,9 +1957,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => p == null));
 
@@ -1989,8 +1990,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery(contentGuidFilter).ToList();
-            Assert.IsTrue(contentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count >= 1);
+            ClassicAssert.IsTrue(contentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count >= 1);
 
             //expect no entry to match for a Guid Comparison against a null nullable Id
             var nullableContentGuidFilter = new QueryBuilderFilterRule
@@ -2011,8 +2012,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery(nullableContentGuidFilter).ToList();
-            Assert.IsTrue(nullableContentGuidFilteredList != null);
-            Assert.IsTrue(nullableContentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList.Count == 1);
 
             //expect 3 entries to match for a case-insensitive string comparison
             var longerTextToFilterFilter = new FilterRule()
@@ -2033,9 +2034,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p.StartsWith("there is something")));
 
@@ -2065,8 +2066,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentGuidFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentGuidFilter).ToList();
-            Assert.IsTrue(contentGuidFilteredList != null);
-            Assert.IsTrue(contentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentGuidFilteredList != null);
+            ClassicAssert.IsTrue(contentGuidFilteredList.Count == 1);
 
             //expect no entry to match for a Guid Comparison against a null nullable Id
             var nullableContentGuidFilter = new QueryBuilderFilterRule
@@ -2087,8 +2088,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableContentGuidFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentGuidFilter).ToList();
-            Assert.IsTrue(nullableContentGuidFilteredList != null);
-            Assert.IsTrue(nullableContentGuidFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentGuidFilteredList.Count == 1);
 
 
             //expect two entries to match for an integer comparison
@@ -2110,9 +2111,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 2);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId == 1));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId == 1));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -2142,9 +2143,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 1);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId == 1));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId == 1));
 
 
 
@@ -2168,9 +2169,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter.ToLower())
                     .All(p => p == "there is something interesting about this text"));
 
@@ -2194,9 +2195,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -2227,9 +2228,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -2258,9 +2259,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var isSelectedFilterList = startingQuery.BuildQuery(isSelectedFilter).ToList();
-            Assert.IsTrue(isSelectedFilterList != null);
-            Assert.IsTrue(isSelectedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(isSelectedFilterList != null);
+            ClassicAssert.IsTrue(isSelectedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 isSelectedFilterList.Select(p => p.IsSelected)
                     .All(p => p == true));
 
@@ -2291,9 +2292,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableIsSelectedFilterList = startingQuery.BuildQuery(nullableIsSelectedFilter).ToList();
-            Assert.IsTrue(nullableIsSelectedFilterList != null);
-            Assert.IsTrue(nullableIsSelectedFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableIsSelectedFilterList != null);
+            ClassicAssert.IsTrue(nullableIsSelectedFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableIsSelectedFilterList.Select(p => p.IsPossiblyNotSetBool)
                     .All(p => p == true));
 
@@ -2317,9 +2318,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => p == 1.11));
 
@@ -2350,9 +2351,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p == 1.112));
 
@@ -2385,9 +2386,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 2);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId != 1));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId != 1));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -2417,9 +2418,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 3);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId != 1));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 3);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId != 1));
 
 
 
@@ -2443,9 +2444,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var longerTextToFilterList = startingQuery.BuildQuery(longerTextToFilterFilter).ToList();
-            Assert.IsTrue(longerTextToFilterList != null);
-            Assert.IsTrue(longerTextToFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(longerTextToFilterList != null);
+            ClassicAssert.IsTrue(longerTextToFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 longerTextToFilterList.Select(p => p.LongerTextToFilter)
                     .All(p => (p == null) || (p.ToLower() != "there is something interesting about this text")));
 
@@ -2469,9 +2470,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => p == DateTime.UtcNow.Date));
 
@@ -2502,9 +2503,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => p != DateTime.UtcNow.Date));
 
@@ -2528,9 +2529,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var isSelectedFilterList = startingQuery.BuildQuery(isSelectedFilter).ToList();
-            Assert.IsTrue(isSelectedFilterList != null);
-            Assert.IsTrue(isSelectedFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(isSelectedFilterList != null);
+            ClassicAssert.IsTrue(isSelectedFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 isSelectedFilterList.Select(p => p.IsSelected)
                     .All(p => p != true));
 
@@ -2561,9 +2562,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableIsSelectedFilterList = startingQuery.BuildQuery(nullableIsSelectedFilter).ToList();
-            Assert.IsTrue(nullableIsSelectedFilterList != null);
-            Assert.IsTrue(nullableIsSelectedFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableIsSelectedFilterList != null);
+            ClassicAssert.IsTrue(nullableIsSelectedFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableIsSelectedFilterList.Select(p => p.IsPossiblyNotSetBool)
                     .All(p => p != true));
 
@@ -2587,9 +2588,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => p != 1.11));
 
@@ -2620,9 +2621,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p != 1.112));
 
@@ -2658,8 +2659,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 CultureInfo = CultureInfo.CurrentCulture,
                 ParseDatesAsUtc = true
             }).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
             
 
             //expect failure when an invalid date is encountered in date comparison
@@ -2702,9 +2703,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 3);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 3));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 3);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 3));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -2734,9 +2735,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 3));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 3));
 
 
 
@@ -2761,9 +2762,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p >= DateTime.UtcNow.Date.AddDays(-2)) && (p <= DateTime.UtcNow.Date)));
 
@@ -2794,9 +2795,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p >= DateTime.UtcNow.Date.AddDays(-2)) && (p <= DateTime.UtcNow.Date)));
 
@@ -2820,9 +2821,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p >= 1.0) && (p <= 1.12)));
 
@@ -2853,9 +2854,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p == 1.112));
 
@@ -2886,9 +2887,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 1);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 1 || p.ContentTypeId > 2));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 1 || p.ContentTypeId > 2));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -2918,9 +2919,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 1 || p.NullableContentTypeId > 2 || p.NullableContentTypeId == null));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 1 || p.NullableContentTypeId > 2 || p.NullableContentTypeId == null));
 
 
 
@@ -2945,9 +2946,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(-2)) && (p >= DateTime.UtcNow.Date)));
 
@@ -2978,9 +2979,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(-2) && p >= DateTime.UtcNow.Date) || p == null));
 
@@ -3004,9 +3005,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 1);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 1);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p <= 1.0) || (p >= 1.12)));
 
@@ -3037,9 +3038,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p != 1.112));
 
@@ -3070,9 +3071,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 2);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId >= 2));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId >= 2));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -3102,9 +3103,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId >= 2));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId >= 2));
 
 
             //expect 4 entries to match for a Date comparison
@@ -3126,9 +3127,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p >= DateTime.UtcNow.Date.AddDays(-2))));
 
@@ -3159,9 +3160,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p >= DateTime.UtcNow.Date.AddDays(1))));
 
@@ -3185,9 +3186,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p >= 1)));
 
@@ -3218,9 +3219,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p >= 1.112));
 
@@ -3251,9 +3252,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 1);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId > 2));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId > 2));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -3283,9 +3284,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 1);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId > 2));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId > 2));
 
 
             //expect 4 entries to match for a Date comparison
@@ -3307,9 +3308,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p > DateTime.UtcNow.Date.AddDays(-2))));
 
@@ -3340,9 +3341,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p > DateTime.UtcNow.Date.AddDays(1))));
 
@@ -3366,9 +3367,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p > 1)));
 
@@ -3399,9 +3400,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p > 1.112));
 
@@ -3432,9 +3433,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 2);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 2));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId < 2));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -3464,9 +3465,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 1);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 2));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId < 2));
 
 
             //expect 0 entries to match for a Date comparison
@@ -3488,9 +3489,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(-2))));
 
@@ -3521,9 +3522,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(1))));
 
@@ -3547,9 +3548,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p <= 1.12)));
 
@@ -3580,9 +3581,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p < 1.113));
 
@@ -3613,9 +3614,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var contentIdFilteredList = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter).ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 3);
-            Assert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId <= 2));
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 3);
+            ClassicAssert.IsTrue(contentIdFilteredList.All(p => p.ContentTypeId <= 2));
 
             //expect failure when non-numeric value is encountered in integer comparison
             ExceptionAssert.Throws<Exception>(() =>
@@ -3645,9 +3646,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             };
             var nullableContentIdFilteredList =
                 startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(nullableContentIdFilter).ToList();
-            Assert.IsTrue(nullableContentIdFilteredList != null);
-            Assert.IsTrue(nullableContentIdFilteredList.Count == 2);
-            Assert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId <= 2));
+            ClassicAssert.IsTrue(nullableContentIdFilteredList != null);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.Count == 2);
+            ClassicAssert.IsTrue(nullableContentIdFilteredList.All(p => p.NullableContentTypeId <= 2));
 
 
             //expect 0 entries to match for a Date comparison
@@ -3669,9 +3670,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var lastModifiedFilterList = startingQuery.BuildQuery(lastModifiedFilter).ToList();
-            Assert.IsTrue(lastModifiedFilterList != null);
-            Assert.IsTrue(lastModifiedFilterList.Count == 0);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(lastModifiedFilterList != null);
+            ClassicAssert.IsTrue(lastModifiedFilterList.Count == 0);
+            ClassicAssert.IsTrue(
                 lastModifiedFilterList.Select(p => p.LastModified)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(-2))));
 
@@ -3702,9 +3703,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableLastModifiedFilterList = startingQuery.BuildQuery(nullableLastModifiedFilter).ToList();
-            Assert.IsTrue(nullableLastModifiedFilterList != null);
-            Assert.IsTrue(nullableLastModifiedFilterList.Count == 3);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList != null);
+            ClassicAssert.IsTrue(nullableLastModifiedFilterList.Count == 3);
+            ClassicAssert.IsTrue(
                 nullableLastModifiedFilterList.Select(p => p.LastModifiedIfPresent)
                     .All(p => (p <= DateTime.UtcNow.Date.AddDays(1))));
 
@@ -3728,9 +3729,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var statValueFilterList = startingQuery.BuildQuery(statValueFilter).ToList();
-            Assert.IsTrue(statValueFilterList != null);
-            Assert.IsTrue(statValueFilterList.Count == 4);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(statValueFilterList != null);
+            ClassicAssert.IsTrue(statValueFilterList.Count == 4);
+            ClassicAssert.IsTrue(
                 statValueFilterList.Select(p => p.StatValue)
                     .All(p => (p <= 1.13)));
 
@@ -3761,9 +3762,9 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
                 }
             };
             var nullableStatFilterList = startingQuery.BuildQuery(nullableStatValueFilter).ToList();
-            Assert.IsTrue(nullableStatFilterList != null);
-            Assert.IsTrue(nullableStatFilterList.Count == 2);
-            Assert.IsTrue(
+            ClassicAssert.IsTrue(nullableStatFilterList != null);
+            ClassicAssert.IsTrue(nullableStatFilterList.Count == 2);
+            ClassicAssert.IsTrue(
                 nullableStatFilterList.Select(p => p.PossiblyEmptyStatValue)
                     .All(p => p <= 1.113));
 
@@ -3856,11 +3857,11 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
 
             var result = new List<IndexedClass> { new IndexedClass() }.AsQueryable().BuildQuery(rule,
                 new BuildExpressionOptions() { UseIndexedProperty = true, IndexedPropertyName = "Item" });
-            Assert.IsTrue(result.Any());
+            ClassicAssert.IsTrue(result.Any());
 
             rule.Value = "3";
             result = new[] { new IndexedClass() }.BuildQuery(rule, true, "Item");
-            Assert.IsFalse(result.Any());
+            ClassicAssert.IsFalse(result.Any());
         }
         #endregion
 
@@ -3883,11 +3884,11 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             var predicate = rule.BuildPredicate<IndexedClass>(new BuildExpressionOptions { IndexedPropertyName = "Item", UseIndexedProperty = true });
 
             var result = new[] { new IndexedClass() }.Where(predicate);
-            Assert.IsTrue(result.Any());
+            ClassicAssert.IsTrue(result.Any());
 
             rule.Value = "3";
             result = new[] { new IndexedClass() }.BuildQuery(rule, true, "Item");
-            Assert.IsFalse(result.Any());
+            ClassicAssert.IsFalse(result.Any());
         }
         [Test]
         public void Build_Predicate_Null_Test()
@@ -3900,7 +3901,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
 
             var res = resData.Where(predicate).ToList();
 
-            Assert.IsTrue(res.Count == 4);
+            ClassicAssert.IsTrue(res.Count == 4);
 
         }
 
@@ -4038,7 +4039,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
 
             var res = list.BuildQuery(rule).ToList();
 
-            Assert.IsTrue(res.Count == 1);
+            ClassicAssert.IsTrue(res.Count == 1);
 
         }
 
@@ -4082,7 +4083,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
 
             var res = list.BuildQuery(rule).ToList();
 
-            Assert.IsTrue(res.Count == 1);
+            ClassicAssert.IsTrue(res.Count == 1);
         }
 
 
@@ -4101,7 +4102,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             var res = data.AsQueryable().BuildQuery(rule, new BuildExpressionOptions() { ParseDatesAsUtc = true })
                 .ToList();
 
-            Assert.IsTrue(res.Count == 4);
+            ClassicAssert.IsTrue(res.Count == 4);
 
 
         }
@@ -4130,8 +4131,8 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
             var queryable = startingQuery.BuildQuery<ExpressionTreeBuilderTestClass>(contentIdFilter,
                 new BuildExpressionOptions() { CultureInfo = new CultureInfo("en-GB", true) });
             var contentIdFilteredList = queryable.ToList();
-            Assert.IsTrue(contentIdFilteredList != null);
-            Assert.IsTrue(contentIdFilteredList.Count == 1);
+            ClassicAssert.IsTrue(contentIdFilteredList != null);
+            ClassicAssert.IsTrue(contentIdFilteredList.Count == 1);
         }
 
         [Test]
@@ -4207,11 +4208,11 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
         {
             var result = typeof(ColumnBuilderTestClass).GetDefaultColumnDefinitionsForType();
 
-            Assert.IsTrue(result.Count == 10);
+            ClassicAssert.IsTrue(result.Count == 10);
 
             result = typeof(ColumnBuilderTestClass).GetDefaultColumnDefinitionsForType(true);
 
-            Assert.IsTrue(result.Count == 10);
+            ClassicAssert.IsTrue(result.Count == 10);
 
         }
 
@@ -4220,7 +4221,7 @@ namespace Castle.DynamicLinqQueryBuilder.Tests.Rules
         {
             var cDef = new ColumnDefinition();
             var res = cDef.PrettyOutputTransformer.Invoke("Test");
-            Assert.IsTrue(res.ToString() == "Test");
+            ClassicAssert.IsTrue(res.ToString() == "Test");
         }
 
         #endregion
