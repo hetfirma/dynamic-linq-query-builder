@@ -17,7 +17,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <param name="dataType">Type of the data.</param>
         /// <param name="camelCase">if set to <c>true</c> [camel case].</param>
         /// <returns></returns>
-        public static List<ColumnDefinition> GetDefaultColumnDefinitionsForType(this Type dataType, bool camelCase = false)
+        public static List<ColumnDefinition> GetDefaultColumnDefinitionsForType(this Type dataType, bool lowerCase = true)
         {
             List<ColumnDefinition> itemBankColumnDefinitions = new List<ColumnDefinition>();
 
@@ -26,7 +26,7 @@ namespace Castle.DynamicLinqQueryBuilder
             {
                 if (prop.GetCustomAttribute(typeof (IgnoreDataMemberAttribute)) != null) continue;
 
-                var name = camelCase ? prop.Name.ToCamelCase() : prop.Name;
+                var name = lowerCase ? prop.Name.ToLower() : prop.Name;
 
                 var title = prop.Name.ToFriendlySpacedString();
                 var id = prop.Name.ConvertToJsId();

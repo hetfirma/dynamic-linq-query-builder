@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Castle.DynamicLinqQueryBuilder.Example.Sample;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Castle.DynamicLinqQueryBuilder.Example.Controllers
 {
@@ -16,12 +18,27 @@ namespace Castle.DynamicLinqQueryBuilder.Example.Controllers
             _logger = logger;
         }
 
+        public class LowercaseNamingPolicy : JsonNamingPolicy
+        {
+            public override string ConvertName(string name)
+            {
+                return name.ToLowerInvariant(); // Convert the property name to lowercase
+            }
+        }
+
         public IActionResult Index()
         {
-            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            var options = new JsonSerializerOptions()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IncludeFields = true,
+                WriteIndented = false,
+                TypeInfoResolver = System.Text.Json.Serialization.Metadata.DataContractResolver.Default,
+            };
 
-            var definitions = typeof(PersonRecord).GetDefaultColumnDefinitionsForType(false);
-            var people = PersonBuilder.GetPeople();
+            var definitions = typeof(PersonRecord).GetDefaultColumnDefinitionsForType(true);
+            var people = PersonBuilder.GetPeople().Take(2);
 
             //Augment the definitions to show advanced scenarios not
             //handled by GetDefaultColumnDefinitionsForType(...)
@@ -42,9 +59,10 @@ namespace Castle.DynamicLinqQueryBuilder.Example.Controllers
                 todayHighlight = true,
                 autoclose = true
             };
+            var jsonRaw = JsonSerializer.Serialize(definitions, options);
 
-            ViewBag.FilterDefinition =
-                JsonConvert.SerializeObject(definitions, jsonSerializerSettings);
+            ViewBag.FilterDefinition = JsonSerializer.Serialize(definitions, options);
+
             ViewBag.Model = people;
             return View();
         }
@@ -52,6 +70,8 @@ namespace Castle.DynamicLinqQueryBuilder.Example.Controllers
         [HttpPost]
         public JsonResult Index([FromBody]QueryBuilderFilterRule obj)
         {
+            var rules = obj.Rules;
+
             var people = PersonBuilder.GetPeople().BuildQuery(obj).ToList();
             return Json(people);
         }
@@ -62,5 +82,8 @@ namespace Castle.DynamicLinqQueryBuilder.Example.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+     
     }
 }

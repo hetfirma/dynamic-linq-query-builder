@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Newtonsoft.Json;
+
+using System.Text.Json;
 
 namespace Castle.DynamicLinqQueryBuilder.Example.Sample
 {
@@ -14,7 +15,7 @@ namespace Castle.DynamicLinqQueryBuilder.Example.Sample
 
             var testData = TestData;
 
-            var personRecords = JsonConvert.DeserializeObject<List<PersonRecord>>(testData);
+            var personRecords = JsonSerializer.Deserialize<List <PersonRecord>>(testData);
 
             return personRecords;
 

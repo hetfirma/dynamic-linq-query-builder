@@ -25,7 +25,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The label.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "label")]
         public string Label { get; set; }
         /// <summary>
         /// Gets or sets the field.
@@ -33,7 +33,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The field.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "field")]
         public string Field { get; set; }
         /// <summary>
         /// Gets or sets the type.
@@ -41,7 +41,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The type.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "type")]
         public string Type { get; set; }
         /// <summary>
         /// Gets or sets the input.
@@ -49,7 +49,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The input.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "input")]
         public string Input { get; set; }
         /// <summary>
         /// Gets or sets the multiple.
@@ -57,7 +57,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The multiple.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "multiple")]
         public bool? Multiple { get; set; }
         /// <summary>
         /// Gets or sets the values.
@@ -65,7 +65,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The values.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "values")]
         public object Values { get; set; }
         /// <summary>
         /// Gets or sets the operators.
@@ -73,7 +73,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The operators.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "operators")]
         public List<string> Operators { get; set; }
         /// <summary>
         /// Gets or sets the template.
@@ -81,7 +81,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The template.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "template")]
         public string Template { get; set; }
         /// <summary>
         /// Gets or sets the item bank not filterable.
@@ -89,7 +89,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The item bank not filterable.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "itembanknotfilterable")]
         public bool? ItemBankNotFilterable { get; set; }
         /// <summary>
         /// Gets or sets the item bank not column.
@@ -97,7 +97,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The item bank not column.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "itembanknotcolumn")]
         public bool? ItemBankNotColumn { get; set; }
         /// <summary>
         /// Gets or sets the pretty output transformer.
@@ -114,7 +114,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The identifier.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The plugin.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "plugin")]
         public string Plugin { get; set; }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Castle.DynamicLinqQueryBuilder
         /// <value>
         /// The object defining the plugin configuration.
         /// </value>
-        [DataMember]
+        [DataMember(Name = "plugin_config")]
         public object Plugin_config { get; set; }
     }
 }
